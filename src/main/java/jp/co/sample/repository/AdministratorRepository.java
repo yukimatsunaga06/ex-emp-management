@@ -1,4 +1,11 @@
 package jp.co.sample.repository;
+/**
+ * 
+ * AdministratorのRepository
+ * 
+ * @author yukimatsunaga
+ * 
+ */
 
 import java.util.List;
 

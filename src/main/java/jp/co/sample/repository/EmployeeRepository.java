@@ -1,8 +1,21 @@
 package jp.co.sample.repository;
 
+/**
+ * 
+ * EmployeeのRepository
+ * 
+ * @author yukimatsunaga
+ * 
+ */
+
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
 
 import jp.co.sample.domain.Employee;
@@ -28,8 +41,24 @@ public class EmployeeRepository {
 		employee.setDependentsCount(rs.getInt("dependentsCount"));
 		return employee;
 	};	
-	
-	
-	
+	public List<Employee> findAll(){
+		String sql ="SELECT * FROM employees ORDER BY hireDate";
+		List<Employee> employeeList=template.query(sql,EMPLOYEE_ROW_MAPPER);
+		if(employeeList.size()==0) {
+			return null;
+		}
+		return employeeList;
+	}
+	public Employee load(Integer id) {
+		String sql ="SELECT * FROM employees WHERE id=:id";
+		SqlParameterSource param = new MapSqlParameterSource().addValue("id",id);
+		Employee employee=template.queryForObject(sql,param,EMPLOYEE_ROW_MAPPER);
+		return employee;
+	}
+	public void update(Employee employee) {
+	SqlParameterSource param=new BeanPropertySqlParameterSource(employee);
+	String updateSql="UPDATE employees SET name=:name,image=:image,gender=:gender,hireDate=:hireDate,mailAdress=:mailAdress,zipCode=:zipCode,address=:address,telephone=:telephone,saraly=:saraly,characteristics=:characteristics,dependentsCount=:dependentsCount";
+	template.update(updateSql, param);
+	}
 	
 }
