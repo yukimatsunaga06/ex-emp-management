@@ -28,21 +28,21 @@ public class AdministratorRepository {
 		Administrator administorator = new Administrator();
 		administorator.setId(rs.getInt("id"));
 		administorator.setName(rs.getString("name"));
-		administorator.setMailAdress(rs.getString("mailAdress"));
+		administorator.setMailAddress(rs.getString("mailAddress"));
 		administorator.setPassword(rs.getString("password"));
 		return administorator;
 	};	
 	public void insert(Administrator administrator) {
 		SqlParameterSource param = new BeanPropertySqlParameterSource(administrator);
 		String insertSql
-			="INSERT INTO administrator(name,mailAdress,password)"
-				+"VALUES(:name,:mailAdress,:password)";
+			="INSERT INTO administrators(name,mailAddress,password)"
+				+"VALUES(:name,:mailAddress,:password)";
 				template.update(insertSql, param);
 	}
 
-	public Administrator findByMailAddressAndfPassword(String mailAdress,String password) {
-		String sql ="SELECT mailAdress,password FROM administrators WHERE mailAdress=:mailAdress,password=:password";
-		SqlParameterSource param = new MapSqlParameterSource().addValue("mailAdress",mailAdress).addValue("password",password);
+	public Administrator findByMailAddressAndfPassword(String mailAddress,String password) {
+		String sql ="SELECT mailAddress,password FROM administrators WHERE mailAddress=:mailAddress,password=:password";
+		SqlParameterSource param = new MapSqlParameterSource().addValue("mailAddress",mailAddress).addValue("password",password);
 		List<Administrator> administratorList=template.query(sql,param,ADMINISTRATOR_ROW_MAPPER);
 		if(administratorList.size()==0) {
 			return null;

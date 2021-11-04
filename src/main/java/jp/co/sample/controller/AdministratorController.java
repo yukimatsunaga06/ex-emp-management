@@ -29,7 +29,7 @@ public class AdministratorController {
 	public String insert (InsertAdministratorForm form) {
 		Administrator administrator=new Administrator();
 		administrator.setName("伊賀将之");
-		administrator.setMailAdress("iga@sample.com");
+		administrator.setMailAddress("iga@sample.com");
 		administrator.setPassword("testtest");
 		service.insert(administrator);
 		return "redirect:/";
