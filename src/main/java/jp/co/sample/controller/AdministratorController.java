@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import jp.co.sample.domain.Administrator;
 import jp.co.sample.form.InsertAdministratorForm;
 import jp.co.sample.service.AdministratorService;
 
@@ -24,4 +25,13 @@ public class AdministratorController {
 		return "administrator/insert";
 	}
 	
+	@RequestMapping("/insert")
+	public String insert (InsertAdministratorForm form) {
+		Administrator administrator=new Administrator();
+		administrator.setName("伊賀将之");
+		administrator.setMailAdress("iga@sample.com");
+		administrator.setPassword("testtest");
+		service.insert(administrator);
+		return "redirect:/";
+	}
 }
